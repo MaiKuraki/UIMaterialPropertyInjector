@@ -143,14 +143,28 @@ namespace Coffee.UIExtensions
                     }
                     else
                     {
+                        EditorGUI.BeginChangeCheck();
                         EditorGUI.PropertyField(r, prop, label);
-                        prop.serializedObject.ApplyModifiedProperties();
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            prop.serializedObject.ApplyModifiedProperties();
+                        }
                     }
                 }
                 else
                 {
                     EditorGUI.BeginChangeCheck();
-                    _editor.ShaderProperty(r, mp, label);
+                    var attributes = material.shader.GetPropertyAttributes(mp.name);
+                    var attr = MaterialPropertyAttribute.Find(mp, attributes);
+                    if (attr != null)
+                    {
+                        attr.OnGUI(r, name, mp);
+                    }
+                    else
+                    {
+                        DrawDefaultGUI(r, name, mp);
+                    }
+
                     if (EditorGUI.EndChangeCheck())
                     {
                         WriteTo(type, prop, mp);
@@ -189,6 +203,33 @@ namespace Coffee.UIExtensions
                 }
 
                 return false;
+            }
+
+            private void DrawDefaultGUI(Rect r, string name, MaterialProperty mp)
+            {
+                switch (mp.type)
+                {
+                    case MaterialProperty.PropType.Color:
+                        _editor.ColorProperty(r, mp, name);
+                        break;
+                    case MaterialProperty.PropType.Vector:
+                        _editor.VectorProperty(r, mp, name);
+                        break;
+                    case MaterialProperty.PropType.Float:
+                        _editor.FloatProperty(r, mp, name);
+                        break;
+                    case MaterialProperty.PropType.Range:
+                        _editor.RangeProperty(r, mp, name);
+                        break;
+#if UNITY_2021_1_OR_NEWER
+                    case MaterialProperty.PropType.Int:
+                        _editor.IntegerProperty(r, mp, name);
+                        break;
+#endif
+                    default:
+                        _editor.ShaderProperty(r, mp, name);
+                        break;
+                }
             }
 
             private static void ReadFrom(string name, PropertyType type, SerializedProperty prop, Material material)

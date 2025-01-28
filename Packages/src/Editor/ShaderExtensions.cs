@@ -37,6 +37,14 @@ namespace Coffee.UIExtensions
 
     public static class ShaderExtensions
     {
+        public static string[] GetPropertyAttributes(this Shader shader, string propertyName)
+        {
+            var index = shader.FindPropertyIndex(propertyName);
+            if (index < 0) return Array.Empty<string>();
+
+            return shader.GetPropertyAttributes(index);
+        }
+
         public static IEnumerable<ShaderProperty> GetAllProperties(this Shader self)
         {
             if (!self) yield break;
