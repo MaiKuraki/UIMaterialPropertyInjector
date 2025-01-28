@@ -138,11 +138,13 @@ namespace Coffee.UIExtensions
                         if (EditorGUI.EndChangeCheck())
                         {
                             prop.vector4Value = newValue;
+                            prop.serializedObject.ApplyModifiedProperties();
                         }
                     }
                     else
                     {
                         EditorGUI.PropertyField(r, prop, label);
+                        prop.serializedObject.ApplyModifiedProperties();
                     }
                 }
                 else
