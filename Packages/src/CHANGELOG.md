@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.0.3...1.0.4) (2025-01-28)
+
+
+### Bug Fixes
+
+* vector4 properties such as `_MainTex_ST` cannot be modified from the Inspector in editor ([5805fd8](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/5805fd8ec5f0b0167d7dcda2ca5f378c4fa26506))
+
 ## [1.0.3](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.0.2...1.0.3) (2024-10-02)
 
 
