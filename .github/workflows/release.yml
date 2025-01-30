@@ -1,4 +1,5 @@
 name: 🔖 Release
+run-name: 🔖 Release (${{ github.ref_name }})
 
 on:
   workflow_dispatch:
@@ -35,20 +36,9 @@ jobs:
             @semantic-release/changelog
             @semantic-release/git
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - run: |
           echo "🔖 New release published: '${{ steps.release.outputs.new_release_published }}'" | tee -a $GITHUB_STEP_SUMMARY
           echo "🔖 New release channel: '${{ steps.release.outputs.new_release_channel }}'" | tee -a $GITHUB_STEP_SUMMARY
           echo "🔖 New release git tag: '${{ steps.release.outputs.new_release_git_tag }}'" | tee -a $GITHUB_STEP_SUMMARY
-
-  merge-to-develop:
-    name: 🔀 Merge to develop
-    needs: release
-    if: needs.release.outputs.released == 'true' && needs.release.outputs.channel == ''
-    uses: ./.github/workflows/merge.yml
-    with:
-      from: ${{ needs.release.outputs.tag }}
-      to: develop
-    permissions:
-      contents: write

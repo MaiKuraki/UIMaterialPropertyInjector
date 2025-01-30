@@ -28,7 +28,7 @@ Custom properties for changing material properties are easy for experienced user
 
 This package provides a component that allows easy modification of material properties for Unity UI (uGUI) without the need for shader-specific custom components.
 
-![](https://github.com/mob-sakai/UIMaterialPropertyInjector/assets/12690315/adaf45ed-5852-4844-ad1a-daa231225be7)
+![](https://github.com/user-attachments/assets/fcc54340-9fa5-4a7d-bc5b-3ccd7b317502)
 
 **Key Features:**
 
@@ -71,7 +71,7 @@ _This package requires **Unity 2019.4 or later**._
   ```
 - To update the package, use Package Manager UI (`Window > Package Manager`) or run the following command with `@{version}`:
   ```
-  openupm add com.coffee.ui-material-property-injector@1.0.0
+  openupm add com.coffee.ui-material-property-injector@1.1.0
   ```
 
 #### Install via UPM (with Package Manager UI)
@@ -80,7 +80,7 @@ _This package requires **Unity 2019.4 or later**._
 - Click `+ > Add package from git URL...` and input the repository URL: `https://github.com/mob-sakai/UIMaterialPropertyInjector.git?path=Packages/src`  
   ![](https://gist.github.com/assets/12690315/24af63ed-8a2e-483d-9023-7aa53d913330)
 - To update the package, change suffix `#{version}` to the target version.
-   - e.g. `https://github.com/mob-sakai/UIMaterialPropertyInjector.git?path=Packages/src#1.0.0`
+   - e.g. `https://github.com/mob-sakai/UIMaterialPropertyInjector.git?path=Packages/src#1.1.0`
 
 #### Install via UPM (Manually)
 
@@ -95,7 +95,7 @@ _This package requires **Unity 2019.4 or later**._
   ```
 
 - To update the package, change suffix `#{version}` to the target version.
-   - e.g. `"com.coffee.ui-material-property-injector": "https://github.com/mob-sakai/UIMaterialPropertyInjector.git?path=Packages/src#1.0.0",`
+   - e.g. `"com.coffee.ui-material-property-injector": "https://github.com/mob-sakai/UIMaterialPropertyInjector.git?path=Packages/src#1.1.0",`
 
 #### Install as Embedded Package
 
@@ -201,4 +201,4 @@ Your support allows me to dedicate more time to development. 😊
 * GitHub page : https://github.com/mob-sakai/UIMaterialPropertyInjector
 * Releases : https://github.com/mob-sakai/UIMaterialPropertyInjector/releases
 * Issue tracker : https://github.com/mob-sakai/UIMaterialPropertyInjector/issues
-* Change log : https://github.com/mob-sakai/UIMaterialPropertyInjector/blob/main/CHANGELOG.md
+* Change log : https://github.com/mob-sakai/UIMaterialPropertyInjector/blob/main/Packages/src/CHANGELOG.md
