@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Coffee.UIExtensions
 {
@@ -12,6 +13,7 @@ namespace Coffee.UIExtensions
     {
         public Action<SerializedProperty, string> postAddCallback;
         public Action resetCallback;
+        private readonly ShaderPropertyDropdown _dropdown = new ShaderPropertyDropdown();
 
         private static readonly Regex s_RegexOthers =
             new Regex(
@@ -23,7 +25,7 @@ namespace Coffee.UIExtensions
             drawHeaderCallback = DrawHeaderCallback;
             drawElementCallback = DrawElementCallback;
             onAddDropdownCallback = OnAddDropdownCallback;
-            elementHeightCallback = i => EditorGUI.GetPropertyHeight(prop.GetArrayElementAtIndex(i)) + 2;
+            elementHeight = EditorGUIUtility.singleLineHeight + 2;
         }
 
         private void DrawElementCallback(Rect r, int i, bool _, bool __)
@@ -66,33 +68,15 @@ namespace Coffee.UIExtensions
                 .Where(p => 0 == (p.flags & ShaderPropertyFlags.PerRendererData) && !included.Contains(p.name))
                 .Append(new ShaderProperty("", PropertyType.Undefined)) // Separator
                 .OrderBy(p => s_RegexOthers.IsMatch(p.name));
-            var menu = new GenericMenu();
-            foreach (var p in properties)
-            {
-                AddToMenu(menu, propArray, p.name, p.type, postAddCallback);
-            }
 
-            menu.DropDown(r);
-        }
-
-        private static void AddToMenu(GenericMenu menu, SerializedProperty propArray, string propertyName,
-            PropertyType type, Action<SerializedProperty, string> postAddCallback)
-        {
-            if (type == PropertyType.Undefined)
-            {
-                menu.AddSeparator("");
-                return;
-            }
-
-            var menuPath = s_RegexOthers.IsMatch(propertyName)
-                ? $"Others.../{propertyName} ({type})"
-                : $"{propertyName} ({type})";
-            menu.AddItem(EditorGUIUtility.TrTextContent(menuPath), false, () =>
+            _dropdown.SetProperties(shader, properties);
+            _dropdown.SetCallback(s =>
             {
                 var prop = propArray.GetArrayElementAtIndex(propArray.arraySize++);
-                postAddCallback?.Invoke(prop, propertyName);
+                postAddCallback?.Invoke(prop, s.name);
                 propArray.serializedObject.ApplyModifiedProperties();
             });
+            _dropdown.Show(r);
         }
     }
 }
