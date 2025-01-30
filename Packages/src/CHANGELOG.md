@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.0.4...1.1.0) (2025-01-30)
+
+
+### Bug Fixes
+
+* ignore properties with `Toggle`, `KeywordEnum` and `PerRendererData` attributes ([343d9e5](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/343d9e5a51a396fe083fb0b41f2cd3cd18dc5afa))
+
+
+### Features
+
+* support `MaterialToggle`, `Enum`, `IntSlider` and `PowerSlider` shader property attributes ([9881112](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/988111243dbe81d9f19af9cc87136b9c02ba631b))
+* use a searchable dropdown instead of a popup for property selection ([ca62a19](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/ca62a19627d5c9ff4be9093a0745feba1df349de)), closes [#6](https://github.com/mob-sakai/UIMaterialPropertyInjector/issues/6)
+
 ## [1.0.4](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.0.3...1.0.4) (2025-01-28)
 
 
