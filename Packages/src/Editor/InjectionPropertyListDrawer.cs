@@ -63,7 +63,7 @@ namespace Coffee.UIExtensions
                 }));
             var shader = current.defaultMaterialForRendering.shader;
             var properties = shader.GetAllProperties()
-                .Where(p => !included.Contains(p.name))
+                .Where(p => 0 == (p.flags & ShaderPropertyFlags.PerRendererData) && !included.Contains(p.name))
                 .Append(new ShaderProperty("", PropertyType.Undefined)) // Separator
                 .OrderBy(p => s_RegexOthers.IsMatch(p.name));
             var menu = new GenericMenu();
