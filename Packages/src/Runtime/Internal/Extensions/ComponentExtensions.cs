@@ -18,10 +18,10 @@ namespace Coffee.UIMaterialPropertyInjectorInternal
         public static T[] GetComponentsInChildren<T>(this Component self, int depth)
             where T : Component
         {
-            var results = ListPool<T>.Rent();
+            var results = InternalListPool<T>.Rent();
             self.GetComponentsInChildren_Internal(results, depth);
             var array = results.ToArray();
-            ListPool<T>.Return(ref results);
+            InternalListPool<T>.Return(ref results);
             return array;
         }
 
@@ -129,6 +129,35 @@ namespace Coffee.UIMaterialPropertyInjectorInternal
 
                 var c = child.gameObject.AddComponent<T>();
                 c.hideFlags = hideFlags;
+            }
+
+            Profiler.EndSample();
+        }
+
+        /// <summary>
+        /// Add a component of a specific type to the children of a GameObject.
+        /// </summary>
+        public static void AddComponentOnChildren<T>(this Component self, bool includeSelf)
+            where T : Component
+        {
+            if (self == null) return;
+
+            Profiler.BeginSample("(COF)[ComponentExt] AddComponentOnChildren > Self");
+            if (includeSelf && !self.TryGetComponent<T>(out _))
+            {
+                self.gameObject.AddComponent<T>();
+            }
+
+            Profiler.EndSample();
+
+            Profiler.BeginSample("(COF)[ComponentExt] AddComponentOnChildren > Child");
+            var childCount = self.transform.childCount;
+            for (var i = 0; i < childCount; i++)
+            {
+                var child = self.transform.GetChild(i);
+                if (child.TryGetComponent<T>(out _)) continue;
+
+                child.gameObject.AddComponent<T>();
             }
 
             Profiler.EndSample();

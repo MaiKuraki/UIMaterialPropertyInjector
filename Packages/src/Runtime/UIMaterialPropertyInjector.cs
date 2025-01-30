@@ -53,7 +53,7 @@ namespace Coffee.UIExtensions
 
         private List<UIMaterialPropertyInjector> children => _children != null
             ? _children
-            : _children = ListPool<UIMaterialPropertyInjector>.Rent();
+            : _children = InternalListPool<UIMaterialPropertyInjector>.Rent();
 
         private bool canInject => _parent ? _parent.canInject : isActiveAndEnabled && 0 < m_Properties.Count;
 
@@ -224,7 +224,7 @@ namespace Coffee.UIExtensions
                 }
             }
 
-            ListPool<UIMaterialPropertyInjector>.Return(ref _children);
+            InternalListPool<UIMaterialPropertyInjector>.Return(ref _children);
             _injectIfNeeded = null;
             _graphic = null;
             _material = null;

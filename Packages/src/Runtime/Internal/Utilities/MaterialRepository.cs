@@ -15,7 +15,7 @@ namespace Coffee.UIMaterialPropertyInjectorInternal
 
 #if UNITY_EDITOR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void Clear()
+        public static void Clear()
         {
             s_Repository.Clear();
         }
@@ -54,7 +54,6 @@ namespace Coffee.UIMaterialPropertyInjectorInternal
             }, shaderName);
             Profiler.EndSample();
         }
-
 
         /// <summary>
         /// Adds or retrieves a cached material based on the hash.
