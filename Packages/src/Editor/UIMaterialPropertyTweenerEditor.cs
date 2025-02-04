@@ -55,7 +55,8 @@ namespace Coffee.UIExtensions
             {
                 postAddCallback = PostAddElement,
                 resetCallback = ResetCallback,
-                draggable = false
+                draggable = false,
+                elementHeight = (EditorGUIUtility.singleLineHeight + 2) * 2 + 2
             };
         }
 

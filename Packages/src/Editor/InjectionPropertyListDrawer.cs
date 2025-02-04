@@ -25,7 +25,6 @@ namespace Coffee.UIExtensions
             drawHeaderCallback = DrawHeaderCallback;
             drawElementCallback = DrawElementCallback;
             onAddDropdownCallback = OnAddDropdownCallback;
-            elementHeight = EditorGUIUtility.singleLineHeight + 2;
         }
 
         private void DrawElementCallback(Rect r, int i, bool _, bool __)

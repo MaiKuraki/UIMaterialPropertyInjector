@@ -127,6 +127,8 @@ namespace Coffee.UIExtensions
                         : AnimationMode.animatedPropertyColor;
                 }
 
+                var wideMode = EditorGUIUtility.wideMode;
+                EditorGUIUtility.wideMode = true;
                 ReadFrom(name, type, prop, material);
                 var mp = MaterialEditor.GetMaterialProperty(_editor.targets, name);
                 if (type == PropertyType.Texture || mp.name != name)
@@ -173,6 +175,7 @@ namespace Coffee.UIExtensions
                 }
 
                 GUI.backgroundColor = bg;
+                EditorGUIUtility.wideMode = wideMode;
             }
 
             private static bool IsValid(Material material, string propertyName, PropertyType type)
