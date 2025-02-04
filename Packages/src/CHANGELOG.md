@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.1.0...1.1.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* tweener properties are not rendered correctly in the Inspector in the editor. ([ba22663](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/ba2266318b8497efdee4fd6c1c3821c14ebc58a3)), closes [#7](https://github.com/mob-sakai/UIMaterialPropertyInjector/issues/7)
+
 # [1.1.0](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.0.4...1.1.0) (2025-01-30)
 
 
