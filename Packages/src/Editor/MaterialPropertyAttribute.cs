@@ -13,7 +13,7 @@ namespace Coffee.UIExtensions
         private static readonly List<Func<MaterialProperty, string, MaterialPropertyAttribute>> s_FactoryMethods =
             new List<Func<MaterialProperty, string, MaterialPropertyAttribute>>()
             {
-                MaterialToggle.FactoryMethod,
+                Toggle.FactoryMethod,
                 Enum.FactoryMethod,
                 PowerSlider.FactoryMethod,
                 IntSlider.FactoryMethod
@@ -48,7 +48,7 @@ namespace Coffee.UIExtensions
         public abstract void OnGUI(Rect rect, string label, MaterialProperty mp);
     }
 
-    public class MaterialToggle : MaterialPropertyAttribute
+    public class Toggle : MaterialPropertyAttribute
     {
         internal static MaterialPropertyAttribute FactoryMethod(MaterialProperty mp, string attribute)
         {
@@ -58,9 +58,10 @@ namespace Coffee.UIExtensions
             if (mp.type != MaterialProperty.PropType.Float) return null;
 #endif
 
-            if (attribute != "MaterialToggle") return null;
+            var m = Regex.Match(attribute, @"^(Material)?Toggle$");
+            if (!m.Success) return null;
 
-            return new MaterialToggle();
+            return new Toggle();
         }
 
         public override void OnGUI(Rect r, string label, MaterialProperty mp)

@@ -19,7 +19,7 @@ namespace Coffee.UIExtensions
             }
         }
 
-        private static readonly Regex s_RegexIgnored = new Regex(@"^Toggle$|^Toggle\s*\(|^KeywordEnum\s*\(");
+        private static readonly Regex s_RegexIgnored = new Regex(@"^(Material)?(Toggle|KeywordEnum)\s*\(");
 
         private IEnumerable<ShaderProperty> _properties;
         private Action<ShaderProperty> _onSelected;
