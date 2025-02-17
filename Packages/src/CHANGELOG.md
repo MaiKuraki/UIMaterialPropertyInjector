@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.1.1...1.1.2) (2025-02-17)
+
+
+### Bug Fixes
+
+* properties '_UIMaskSoftnessX/Y' are common property ([ee34e1b](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/ee34e1b9099a1ccb83146a15f89c73e339f9fcc1))
+* properties with attributes prefixed with 'Material' or suffixed with 'Drawer' are not displayed correctly ([e5b92fe](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/e5b92fe8ebc3d24646988e2d4f7295dd6d80308e))
+* properties with non-keyword toggle attributes are not displayed in the list ([46d58aa](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/46d58aa10e34e6a0e21d80ae2bc71307723c901d)), closes [#8](https://github.com/mob-sakai/UIMaterialPropertyInjector/issues/8)
+
 ## [1.1.1](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.1.0...1.1.1) (2025-02-04)
 
 
