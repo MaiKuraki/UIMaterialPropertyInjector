@@ -58,7 +58,7 @@ namespace Coffee.UIExtensions
             if (mp.type != MaterialProperty.PropType.Float) return null;
 #endif
 
-            var m = Regex.Match(attribute, @"^(Material)?Toggle$");
+            var m = Regex.Match(attribute, @"^(Material)?Toggle(Drawer)?$");
             if (!m.Success) return null;
 
             return new Toggle();
@@ -93,10 +93,10 @@ namespace Coffee.UIExtensions
             if (mp.type != MaterialProperty.PropType.Float) return null;
 #endif
 
-            var m = Regex.Match(attribute, @"^Enum\s*\(([^)]+)\)");
+            var m = Regex.Match(attribute, @"^(Material)?Enum(Drawer)?\s*\(([^)]+)\)");
             if (!m.Success) return null;
 
-            var values = m.Groups[1].Value.Replace(" ", "").Split(',');
+            var values = m.Groups[3].Value.Replace(" ", "").Split(',');
             if (values.Length == 1)
             {
                 if (s_EnumTypes == null)
@@ -158,10 +158,10 @@ namespace Coffee.UIExtensions
             if (s_NotFoundMethod) return null;
             if (mp.type != MaterialProperty.PropType.Range) return null;
 
-            var m = Regex.Match(attribute, @"^PowerSlider\s*\(([^)]+)\)");
+            var m = Regex.Match(attribute, @"^(Material)?PowerSlider(Drawer)?\s*\(([^)]+)\)");
             if (!m.Success) return null;
 
-            if (float.TryParse(m.Groups[1].Value, out var power) == false) return null;
+            if (float.TryParse(m.Groups[3].Value, out var power) == false) return null;
 
             if (s_DoPowerRangeProperty == null)
             {
@@ -201,7 +201,9 @@ namespace Coffee.UIExtensions
         {
             if (s_NotFoundMethod) return null;
             if (mp.type != MaterialProperty.PropType.Range) return null;
-            if (attribute != "IntRange") return null;
+
+            var m = Regex.Match(attribute, @"^(Material)?IntRange(Drawer)?$");
+            if (!m.Success) return null;
 
             if (s_DoIntRangeProperty == null)
             {
