@@ -18,7 +18,7 @@ namespace Coffee.UIExtensions
         private static readonly Regex s_RegexOthers =
             new Regex(
                 "_ST$|_HDR$|_TexelSize$|^_Stencil|^_MainTex$|^_Color$|^_ClipRect$|^_UseUIAlphaClip$|^_ColorMask$" +
-                "|^_TextureSampleAdd$|^_UIMaskSoftnessX$|^_UIMaskSoftnessY$");
+                "|^_TextureSampleAdd$|^_(UI)?MaskSoftnessX$|^_(UI)?MaskSoftnessY$");
 
         public InjectionPropertyListDrawer(SerializedProperty prop) : base(prop.serializedObject, prop)
         {
