@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Coffee.UIExtensions
 {
+    [Icon("Packages/com.coffee.ui-material-property-injector/Icons/UIMaterialPropertyInjectorIcon.png")]
     public class UIMaterialPropertyTweener : MonoBehaviour, ISerializationCallbackReceiver
     {
         public enum UpdateMode

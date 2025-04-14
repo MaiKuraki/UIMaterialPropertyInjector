@@ -16,10 +16,10 @@ using TMPro;
 namespace Coffee.UIExtensions
 {
     [ExecuteAlways]
-    [RequireComponent(typeof(Graphic))]
+    [Icon("Packages/com.coffee.ui-material-property-injector/Icons/UIMaterialPropertyInjectorIcon.png")]
     public class UIMaterialPropertyInjector : MonoBehaviour, IMaterialModifier, ISerializationCallbackReceiver
     {
-        private static readonly List<Material> s_Materials = new List<Material>();
+        protected static readonly List<Material> s_Materials = new List<Material>();
 
         [Tooltip("Reset all properties with the material properties when enabled.")]
         [HideInInspector]
@@ -44,10 +44,10 @@ namespace Coffee.UIExtensions
 
         private List<UIMaterialPropertyInjector> _children;
         private bool _defaultMaterialMode;
-        private bool _dirty;
+        protected bool _dirty;
         private Graphic _graphic;
         private Action _injectIfNeeded;
-        private Material _material;
+        protected Material _material;
         private UIMaterialPropertyInjector _parent;
         private bool _shouldRebuild;
 
@@ -55,7 +55,7 @@ namespace Coffee.UIExtensions
             ? _children
             : _children = InternalListPool<UIMaterialPropertyInjector>.Rent();
 
-        private bool canInject => _parent ? _parent.canInject : isActiveAndEnabled && 0 < m_Properties.Count;
+        protected bool canInject => _parent ? _parent.canInject : isActiveAndEnabled && 0 < m_Properties.Count;
 
         public List<InjectionProperty> properties
         {
@@ -100,11 +100,17 @@ namespace Coffee.UIExtensions
 
         public Graphic graphic => _graphic ? _graphic : _graphic = GetComponent<Graphic>();
 
-        public Material material => 0 < graphic.canvasRenderer.materialCount
-            ? graphic.canvasRenderer.GetMaterial()
-            : graphic.materialForRendering;
+        public virtual Material material
+        {
+            get
+            {
+                return 0 < graphic.canvasRenderer.materialCount
+                    ? graphic.canvasRenderer.GetMaterial()
+                    : graphic.materialForRendering;
+            }
+        }
 
-        public Material defaultMaterialForRendering
+        public virtual Material defaultMaterialForRendering
         {
             get
             {
@@ -249,7 +255,7 @@ namespace Coffee.UIExtensions
         }
 #endif
 
-        Material IMaterialModifier.GetModifiedMaterial(Material baseMaterial)
+        public Material GetModifiedMaterial(Material baseMaterial)
         {
             if (_defaultMaterialMode)
             {
@@ -400,7 +406,7 @@ namespace Coffee.UIExtensions
             return p;
         }
 
-        private void InjectIfNeeded()
+        protected virtual void InjectIfNeeded()
         {
             // Skip if not dirty.
             if (!graphic || !_dirty || !canInject) return;

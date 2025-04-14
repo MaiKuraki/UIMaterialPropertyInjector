@@ -7,7 +7,7 @@ using UnityEngine.Profiling;
 namespace Coffee.UIExtensions
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(UIMaterialPropertyInjector))]
+    [CustomEditor(typeof(UIMaterialPropertyInjector), true)]
     internal class UIMaterialPropertyInjectorEditor : Editor
     {
         private SerializedProperty _animatable;
@@ -15,7 +15,7 @@ namespace Coffee.UIExtensions
         private SerializedProperty _resetValuesOnEnable;
         private SerializedProperty _sharingGroupId;
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _resetValuesOnEnable = serializedObject.FindProperty("m_ResetValuesOnEnable");
             _animatable = serializedObject.FindProperty("m_Animatable");

@@ -15,15 +15,14 @@ namespace Coffee.UIExtensions
 
         private void Reset()
         {
-            m_Targets = FindObjectsOfType<UIMaterialPropertyInjector>()
+            m_Targets = Misc.FindObjectsOfType<UIMaterialPropertyInjector>()
                 .OfType<MonoBehaviour>()
                 .ToList();
 
-            m_Animators = FindObjectsOfType<Animator>()
+            m_Animators = Misc.FindObjectsOfType<Animator>()
                 .ToList();
 
-            m_tweeners =
-                FindObjectsOfType<UIMaterialPropertyTweener>()
+            m_tweeners = Misc.FindObjectsOfType<UIMaterialPropertyTweener>()
                     .ToList();
         }
 
