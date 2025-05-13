@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEditor;
 
 namespace Coffee.UIExtensions
@@ -6,18 +7,18 @@ namespace Coffee.UIExtensions
     [CustomEditor(typeof(GenericMaterialPropertyInjector), true)]
     internal class GenericMaterialPropertyInjectorEditor : UIMaterialPropertyInjectorEditor
     {
-        private SerializedProperty _taregt;
+        private SerializedProperty _accessor;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            _taregt = serializedObject.FindProperty("m_Target");
+            _accessor = serializedObject.FindProperty("m_Accessor");
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.UpdateIfRequiredOrScript();
-            EditorGUILayout.PropertyField(_taregt);
+            EditorGUILayout.PropertyField(_accessor);
             serializedObject.ApplyModifiedProperties();
 
             base.OnInspectorGUI();

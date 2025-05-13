@@ -1,8 +1,9 @@
-using System;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 namespace Coffee.UIExtensions
 {
@@ -11,37 +12,18 @@ namespace Coffee.UIExtensions
     public class GenericMaterialPropertyInjector : UIMaterialPropertyInjector
     {
         [SerializeField]
-        private Component m_Target;
+        private MaterialAccessor m_Accessor = new MaterialAccessor();
 
         [SerializeField]
         private Material m_BaseMaterial;
-
-        private Func<Material> _getter = null;
-        private Action<Material> _setter = null;
 
         public override Material material => _material;
 
         public override Material defaultMaterialForRendering => m_BaseMaterial
             ? m_BaseMaterial
-            : m_BaseMaterial = getter?.Invoke();
-
-        private Func<Material> getter
-        {
-            get
-            {
-                InitializeIfNeeded();
-                return _getter;
-            }
-        }
-
-        private Action<Material> setter
-        {
-            get
-            {
-                InitializeIfNeeded();
-                return _setter;
-            }
-        }
+            : m_Accessor.InitializeIfNeeded(gameObject)
+                ? m_BaseMaterial = m_Accessor.Get()
+                : null;
 
         protected override void OnEnable()
         {
@@ -49,56 +31,33 @@ namespace Coffee.UIExtensions
             RestoreMaterial();
             InjectIfNeeded();
 
-
+#if UNITY_EDITOR
             EditorSceneManager.sceneSaving += OnSceneSaving;
-            EditorSceneManager.sceneSaved += OnSceneSaved;
-        }
-
-        private void OnSceneSaved(Scene scene)
-        {
-        }
-
-        private void OnSceneSaving(Scene scene, string path)
-        {
-            RestoreMaterial();
+#endif
         }
 
         protected override void OnDisable()
         {
             RestoreMaterial();
-            _getter = null;
-            _setter = null;
-
             base.OnDisable();
 
+#if UNITY_EDITOR
             EditorSceneManager.sceneSaving -= OnSceneSaving;
-            EditorSceneManager.sceneSaved -= OnSceneSaved;
+#endif
         }
 
-        private void InitializeIfNeeded()
+#if UNITY_EDITOR
+        private void OnSceneSaving(Scene scene, string path)
         {
-            if (m_Target && m_Target.gameObject != gameObject)
-            {
-                m_Target = GetComponent(m_Target.GetType());
-                m_BaseMaterial = null;
-                _getter = null;
-                _setter = null;
-            }
-
-            if (m_Target && _getter == null && _setter == null)
-            {
-                // Initialize getter and setter if not already done.
-                var pi = m_Target.GetType().GetProperty("material");
-                _getter = pi.GetGetMethod().CreateDelegate(typeof(Func<Material>), m_Target) as Func<Material>;
-                _setter = pi.GetSetMethod().CreateDelegate(typeof(Action<Material>), m_Target) as Action<Material>;
-            }
+            RestoreMaterial();
         }
+#endif
 
-        private void RestoreMaterial()
+        internal void RestoreMaterial()
         {
-            if (m_BaseMaterial && m_Target && m_Target.gameObject == gameObject)
+            if (m_BaseMaterial && m_Accessor.InitializeIfNeeded(gameObject))
             {
-                setter?.Invoke(m_BaseMaterial);
+                m_Accessor.Set(m_BaseMaterial);
             }
 
             m_BaseMaterial = null;
@@ -106,9 +65,11 @@ namespace Coffee.UIExtensions
 
         protected override void InjectIfNeeded()
         {
+            if (!m_Accessor.InitializeIfNeeded(gameObject)) return;
+
             // Base material has been changed.
             Profiler.BeginSample("(MPI)[Injector] InjectIfNeeded > Check the base material has been changed");
-            var currentMaterial = getter?.Invoke();
+            var currentMaterial = m_Accessor.Get();
             if (_material != currentMaterial)
             {
                 m_BaseMaterial = currentMaterial;
@@ -132,7 +93,7 @@ namespace Coffee.UIExtensions
             }
 
             s_Materials.Clear();
-            setter?.Invoke(_material);
+            m_Accessor.Set(_material);
             Profiler.EndSample();
         }
     }
