@@ -87,7 +87,7 @@ namespace Coffee.UIExtensions
 
         public bool IsValid()
         {
-            return _target && _getter?.Target == _target && _setter?.Target == _target;
+            return _target && (Component)_getter?.Target == _target && (Component)_setter?.Target == _target;
         }
     }
 }

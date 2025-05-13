@@ -253,6 +253,29 @@ namespace Coffee.UIExtensions
             }
         }
 
+        public void Inject(MaterialPropertyBlock material)
+        {
+            switch (propertyType)
+            {
+                case PropertyType.Color:
+                    material.SetColor(id, colorValue);
+                    break;
+                case PropertyType.Float:
+                case PropertyType.Range:
+                    material.SetFloat(id, floatValue);
+                    break;
+                case PropertyType.Vector:
+                    material.SetVector(id, vectorValue);
+                    break;
+                case PropertyType.Texture:
+                    material.SetTexture(id, textureValue);
+                    break;
+                case PropertyType.Int:
+                    material.SetInt(id, intValue);
+                    break;
+            }
+        }
+
         public void ResetToDefault(Material material)
         {
             if (!IsValid(material)) return;
