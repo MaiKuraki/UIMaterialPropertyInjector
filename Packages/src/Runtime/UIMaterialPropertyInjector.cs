@@ -289,6 +289,7 @@ namespace Coffee.UIExtensions
 
             MaterialRepository.Get(hash, ref _material, m => new Material(m)
             {
+                name = $"[Injected] {m.name}",
                 hideFlags = HideFlags.DontSave | HideFlags.NotEditable
             }, baseMaterial);
             Profiler.EndSample();
