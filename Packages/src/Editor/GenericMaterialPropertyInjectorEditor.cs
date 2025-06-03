@@ -1,13 +1,13 @@
-using System.Linq;
 using UnityEditor;
 
 namespace Coffee.UIExtensions
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(GenericMaterialPropertyInjector), true)]
+    [CustomEditor(typeof(GenericMaterialPropertyInjector))]
     internal class GenericMaterialPropertyInjectorEditor : UIMaterialPropertyInjectorEditor
     {
         private SerializedProperty _accessor;
+        private Editor _settingsEditor;
 
         protected override void OnEnable()
         {
@@ -22,6 +22,7 @@ namespace Coffee.UIExtensions
             serializedObject.ApplyModifiedProperties();
 
             base.OnInspectorGUI();
+            SyncMaterialPropertySystem.instance.OnInspectorGUI(target as GenericMaterialPropertyInjector);
         }
     }
 }

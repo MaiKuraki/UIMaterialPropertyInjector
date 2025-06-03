@@ -1,9 +1,5 @@
 using UnityEngine;
 using UnityEngine.Profiling;
-using UnityEngine.SceneManagement;
-#if UNITY_EDITOR
-using UnityEditor.SceneManagement;
-#endif
 
 namespace Coffee.UIExtensions
 {
@@ -18,6 +14,7 @@ namespace Coffee.UIExtensions
         private Material m_BaseMaterial;
 
         public override Material material => _material;
+        public Material baseMaterial => m_BaseMaterial;
 
         public override Material defaultMaterialForRendering => m_BaseMaterial
             ? m_BaseMaterial
@@ -32,28 +29,19 @@ namespace Coffee.UIExtensions
             base.OnEnable();
             RestoreMaterial();
             InjectIfNeeded();
-
 #if UNITY_EDITOR
-            EditorSceneManager.sceneSaving += OnSceneSaving;
+            SyncMaterialPropertySystem.Register(this);
 #endif
         }
 
         protected override void OnDisable()
         {
+#if UNITY_EDITOR
+            SyncMaterialPropertySystem.Unregister(this);
+#endif
             RestoreMaterial();
             base.OnDisable();
-
-#if UNITY_EDITOR
-            EditorSceneManager.sceneSaving -= OnSceneSaving;
-#endif
         }
-
-#if UNITY_EDITOR
-        private void OnSceneSaving(Scene scene, string path)
-        {
-            RestoreMaterial();
-        }
-#endif
 
         internal void RestoreMaterial()
         {
@@ -94,6 +82,9 @@ namespace Coffee.UIExtensions
                 properties[i].Inject(s_Materials);
             }
 
+#if UNITY_EDITOR
+            SyncMaterialPropertySystem.UpdateMaterialDirtyCount(_material);
+#endif
             s_Materials.Clear();
             m_Accessor.Set(_material);
             Profiler.EndSample();
