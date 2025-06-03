@@ -55,7 +55,7 @@ namespace Coffee.UIExtensions
             ? _children
             : _children = InternalListPool<UIMaterialPropertyInjector>.Rent();
 
-        protected bool canInject => _parent ? _parent.canInject : isActiveAndEnabled && 0 < m_Properties.Count;
+        protected virtual bool canInject => _parent ? _parent.canInject : isActiveAndEnabled && 0 < m_Properties.Count;
 
         public List<InjectionProperty> properties
         {

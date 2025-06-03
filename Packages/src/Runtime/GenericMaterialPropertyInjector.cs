@@ -25,6 +25,8 @@ namespace Coffee.UIExtensions
                 ? m_BaseMaterial = m_Accessor.Get()
                 : null;
 
+        protected override bool canInject => m_Accessor.InitializeIfNeeded(gameObject) && base.canInject;
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -65,7 +67,7 @@ namespace Coffee.UIExtensions
 
         protected override void InjectIfNeeded()
         {
-            if (!m_Accessor.InitializeIfNeeded(gameObject)) return;
+            if (!canInject) return;
 
             // Base material has been changed.
             Profiler.BeginSample("(MPI)[Injector] InjectIfNeeded > Check the base material has been changed");
@@ -80,7 +82,7 @@ namespace Coffee.UIExtensions
             Profiler.EndSample();
 
             // Skip if not dirty.
-            if (!_dirty || !canInject || !_material) return;
+            if (!_dirty || !_material || _material == m_BaseMaterial) return;
             _dirty = false;
 
             // Inject properties to materials.
