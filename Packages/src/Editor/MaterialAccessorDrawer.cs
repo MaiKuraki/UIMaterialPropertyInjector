@@ -16,9 +16,16 @@ namespace Coffee.UIExtensions
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var spTarget = property.FindPropertyRelative("m_Target");
-            return IsValidTarget(spTarget, out _)
-                ? (EditorGUIUtility.singleLineHeight + 2) * 3
-                : EditorGUIUtility.singleLineHeight + 2;
+            var spGetter = property.FindPropertyRelative("m_Getter");
+            var spSetter = property.FindPropertyRelative("m_Setter");
+            var row = IsValidTarget(spTarget, out _) ? 3 : 1;
+
+            if (string.IsNullOrEmpty(spGetter.stringValue) || string.IsNullOrEmpty(spSetter.stringValue))
+            {
+                row++;
+            }
+
+            return (EditorGUIUtility.singleLineHeight + 2) * row;
         }
 
         public override void OnGUI(Rect p, SerializedProperty property, GUIContent label)
@@ -27,21 +34,32 @@ namespace Coffee.UIExtensions
             var spTarget = property.FindPropertyRelative("m_Target");
             DrawComponentSelector(rect, property);
 
+            var isValid = false;
             if (IsValidTarget(spTarget, out var target))
             {
                 EditorGUI.indentLevel++;
                 GetMaterialAccessors(target.GetType(), out var getMethods, out var setMethods);
 
                 rect.y += rect.height + 2;
-                DrawMethodSelector(rect, property.FindPropertyRelative("m_Getter"), getMethods);
+                var spGetter = property.FindPropertyRelative("m_Getter");
+                DrawMethodSelector(rect, spGetter, getMethods);
 
                 rect.y += rect.height + 2;
-                DrawMethodSelector(rect, property.FindPropertyRelative("m_Setter"), setMethods);
+                var spSetter = property.FindPropertyRelative("m_Setter");
+                DrawMethodSelector(rect, spSetter, setMethods);
                 EditorGUI.indentLevel--;
+
+                isValid = !string.IsNullOrEmpty(spGetter.stringValue) && !string.IsNullOrEmpty(spSetter.stringValue);
             }
             else
             {
                 spTarget.stringValue = "";
+            }
+
+            if (!isValid)
+            {
+                rect.y += rect.height + 2;
+                EditorGUI.HelpBox(rect, "Invalid Material Accessor", MessageType.Warning);
             }
         }
 
