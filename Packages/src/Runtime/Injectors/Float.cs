@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace Coffee.UIExtensions
+namespace Coffee.UIExtensions.Injectors
 {
     [AddComponentMenu("")]
-    public class Float : Injector
+    internal class Float : Injector
     {
         [SerializeField] private float m_Value;
 

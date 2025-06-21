@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace Coffee.UIExtensions
+namespace Coffee.UIExtensions.Injectors
 {
     [AddComponentMenu("")]
-    public class Texture : Injector
+    internal class Texture : Injector
     {
         [SerializeField] private UnityEngine.Texture m_Value;
 

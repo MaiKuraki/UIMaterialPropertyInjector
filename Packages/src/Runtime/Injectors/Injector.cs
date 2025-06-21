@@ -6,7 +6,7 @@ using UnityEngine.Profiling;
 namespace Coffee.UIExtensions
 {
     [ExecuteAlways]
-    public abstract class Injector : MonoBehaviour, ISerializationCallbackReceiver
+    internal abstract class Injector : MonoBehaviour, ISerializationCallbackReceiver
     {
         [SerializeField] protected string m_PropertyName;
         [SerializeField] private UIMaterialPropertyInjector m_Host;

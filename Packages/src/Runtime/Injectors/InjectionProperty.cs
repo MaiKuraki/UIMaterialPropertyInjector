@@ -51,10 +51,10 @@ namespace Coffee.UIExtensions
 
         public int intValue
         {
-            get => injector is Int i ? i.value : m_Int;
+            get => injector is Injectors.Int i ? i.value : m_Int;
             set
             {
-                if (injector is Int i)
+                if (injector is Injectors.Int i)
                 {
                     i.value = value;
                 }
@@ -71,10 +71,10 @@ namespace Coffee.UIExtensions
 
         public float floatValue
         {
-            get => injector is Float i ? i.value : m_Float;
+            get => injector is Injectors.Float i ? i.value : m_Float;
             set
             {
-                if (injector is Float i)
+                if (injector is Injectors.Float i)
                 {
                     i.value = value;
                 }
@@ -91,10 +91,10 @@ namespace Coffee.UIExtensions
 
         public UnityEngine.Color colorValue
         {
-            get => injector is Color i ? i.value : m_Color;
+            get => injector is Injectors.Color i ? i.value : m_Color;
             set
             {
-                if (injector is Color i)
+                if (injector is Injectors.Color i)
                 {
                     i.value = value;
                 }
@@ -111,10 +111,10 @@ namespace Coffee.UIExtensions
 
         public Vector4 vectorValue
         {
-            get => injector is Vector i ? i.value : m_Vector;
+            get => injector is Injectors.Vector i ? i.value : m_Vector;
             set
             {
-                if (injector is Vector i)
+                if (injector is Injectors.Vector i)
                 {
                     i.value = value;
                 }
@@ -131,10 +131,10 @@ namespace Coffee.UIExtensions
 
         public UnityEngine.Texture textureValue
         {
-            get => injector is Texture i ? i.value : m_Texture;
+            get => injector is Injectors.Texture i ? i.value : m_Texture;
             set
             {
-                if (injector is Texture i)
+                if (injector is Injectors.Texture i)
                 {
                     i.value = value;
                 }
@@ -149,30 +149,30 @@ namespace Coffee.UIExtensions
             }
         }
 
-        public Injector injector
+        internal Injector injector
         {
             get => m_Injector;
             set
             {
                 if (m_Injector == value) return;
                 m_Injector = value;
-                if (m_Injector is Color ci)
+                if (m_Injector is Injectors.Color ci)
                 {
                     ci.value = m_Color;
                 }
-                else if (m_Injector is Float fi)
+                else if (m_Injector is Injectors.Float fi)
                 {
                     fi.value = m_Float;
                 }
-                else if (m_Injector is Vector vi)
+                else if (m_Injector is Injectors.Vector vi)
                 {
                     vi.value = m_Vector;
                 }
-                else if (m_Injector is Texture ti)
+                else if (m_Injector is Injectors.Texture ti)
                 {
                     ti.value = m_Texture;
                 }
-                else if (m_Injector is Int ii)
+                else if (m_Injector is Injectors.Int ii)
                 {
                     ii.value = m_Int;
                 }
@@ -289,16 +289,16 @@ namespace Coffee.UIExtensions
             switch (propertyType)
             {
                 case PropertyType.Color:
-                    return Injector.AddInjector<Color>(m_PropertyName, host);
+                    return Injector.AddInjector<Injectors.Color>(m_PropertyName, host);
                 case PropertyType.Float:
                 case PropertyType.Range:
-                    return Injector.AddInjector<Float>(m_PropertyName, host);
+                    return Injector.AddInjector<Injectors.Float>(m_PropertyName, host);
                 case PropertyType.Vector:
-                    return Injector.AddInjector<Vector>(m_PropertyName, host);
+                    return Injector.AddInjector<Injectors.Vector>(m_PropertyName, host);
                 case PropertyType.Texture:
-                    return Injector.AddInjector<Texture>(m_PropertyName, host);
+                    return Injector.AddInjector<Injectors.Texture>(m_PropertyName, host);
                 case PropertyType.Int:
-                    return Injector.AddInjector<Int>(m_PropertyName, host);
+                    return Injector.AddInjector<Injectors.Int>(m_PropertyName, host);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

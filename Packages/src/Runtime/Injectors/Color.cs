@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace Coffee.UIExtensions
+namespace Coffee.UIExtensions.Injectors
 {
     [AddComponentMenu("")]
-    public class Color : Injector
+    internal class Color : Injector
     {
         [SerializeField] private UnityEngine.Color m_Value;
 
