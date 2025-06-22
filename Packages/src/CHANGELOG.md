@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.1.2...1.1.3) (2025-06-22)
+
+
+### Bug Fixes
+
+* ambiguous reference errors occur between `Coffee.UIExtensions.Color` and `UnityEngine.Color` ([24160fd](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/24160fd0ce415ade2f24bc13d07248370089aebd)), closes [#11](https://github.com/mob-sakai/UIMaterialPropertyInjector/issues/11)
+
 ## [1.1.2](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.1.1...1.1.2) (2025-02-17)
 
 
