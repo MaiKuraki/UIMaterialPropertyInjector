@@ -12,8 +12,8 @@ namespace Coffee.UIExtensions
         private static readonly InternalObjectPool<MaterialPropertyBlock> s_MpbPool =
             new InternalObjectPool<MaterialPropertyBlock>(() => new MaterialPropertyBlock(), _ => true, x => x.Clear());
 
-        private new Renderer renderer => _renderer ? _renderer : _renderer = GetComponent<Renderer>();
-        public override Material material => renderer.sharedMaterial;
+        public new Renderer renderer => _renderer ? _renderer : _renderer = GetComponent<Renderer>();
+        public override Material material => Application.isPlaying ? renderer.material : renderer.sharedMaterial;
         public override Material defaultMaterialForRendering => renderer.sharedMaterial;
 
         private Renderer _renderer;
