@@ -1,3 +1,20 @@
+# [1.2.0](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.1.3...1.2.0) (2025-09-12)
+
+
+### Bug Fixes
+
+* generic mode ([e216b16](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/e216b1655e27f73af4b1ae7a1c2237bb90473ef1))
+* injected material not generated when injection process runs without getter and setter configured ([210f46c](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/210f46c2de915d17131f84280fcfdd89fecddd2e))
+
+
+### Features
+
+* add `renderer` and `material` properties for `RendererMaterialPropertyInjector` ([cb5c919](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/cb5c919dcde8a558db9d514054a74bfe2548c4b8))
+* add invalid material accessor warning in inspector ([33305db](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/33305db1fcdac77184814a91f453455f7e4a4781))
+* generic mode ([b34dbc7](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/b34dbc7feac0da4cba6f52b2141238e00d1458b1))
+* mutual synchronization system between base-material and injected-material (editor) ([c1ae500](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/c1ae5006dfacaa1c470d032ed4e2404720b4d4b5))
+* renderer mode ([b70c644](https://github.com/mob-sakai/UIMaterialPropertyInjector/commit/b70c64441cc85d549270065d4f5907e83cda113d))
+
 ## [1.1.3](https://github.com/mob-sakai/UIMaterialPropertyInjector/compare/1.1.2...1.1.3) (2025-06-22)
 
 
